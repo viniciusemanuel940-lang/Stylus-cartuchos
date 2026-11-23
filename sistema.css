@@ -1,0 +1,500 @@
+:root {
+    --cor-principal: #f8770d;
+    --fundo: #f3f3f3;
+    --texto: #1f2635;
+    --escuro: #1c1f38;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: var(--fundo);
+    color: var(--texto);
+}
+
+/* ===== MENU LATERAL ===== */
+
+.menu-lateral {
+    width: 240px;
+    background: var(--escuro);
+    color: #ffffff;
+    padding: 24px 16px;
+}
+
+.logo {
+    font-size: 22px;
+    margin-bottom: 32px;
+}
+
+.logo span {
+    color: var(--cor-principal);
+}
+
+.menu-lateral nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.menu-lateral button {
+    background: transparent;
+    color: #ffffff;
+    border: none;
+    padding: 12px 16px;
+    font-size: 16px;
+    text-align: left;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.menu-lateral button:hover,
+.menu-lateral button.ativo {
+    background: var(--cor-principal);
+    color: var(--escuro);
+}
+
+/* ===== CONTEÚDO ===== */
+
+.conteudo {
+    flex: 1;
+    padding: 32px;
+    min-width: 0;
+}
+
+.tela h2 {
+    font-size: 28px;
+    margin-bottom: 24px;
+    color: var(--escuro);
+}
+
+.tela h3 {
+    font-size: 18px;
+    color: var(--escuro);
+}
+
+.tela {
+    display: none;
+}
+
+.tela.ativa {
+    display: block;
+}
+
+/* ===== FORMULÁRIOS ===== */
+
+form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 12px;
+    margin-bottom: 32px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: inherit;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.campo-largo {
+    grid-column: 1 / -1;
+}
+
+form button {
+    background: var(--cor-principal);
+    color: var(--escuro);
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    align-self: end;
+}
+
+form button:hover {
+    filter: brightness(1.1);
+}
+
+/* ===== TABELAS ===== */
+
+.tabela-wrap {
+    overflow-x: auto;
+    border-radius: 12px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+th {
+    background: var(--escuro);
+    color: #ffffff;
+    text-align: left;
+    padding: 12px 16px;
+}
+
+td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.campo-largo table {
+    border: 1px solid #e5e7eb;
+}
+
+.vazio {
+    text-align: center;
+    color: #6b7280;
+    padding: 24px;
+}
+
+td select {
+    padding: 6px;
+    font-size: 14px;
+}
+
+/* ===== BOTÕES DAS TABELAS ===== */
+
+.btn-excluir {
+    background: #dc2626;
+    color: #ffffff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-excluir:hover {
+    filter: brightness(1.1);
+}
+
+.btn-editar {
+    background: var(--escuro);
+    color: #ffffff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-right: 8px;
+}
+
+.btn-editar:hover {
+    filter: brightness(1.3);
+}
+
+.btn-ok {
+    background: #16a34a;
+    color: #ffffff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-right: 8px;
+}
+
+.btn-ok:hover {
+    filter: brightness(1.1);
+}
+
+/* Espaço entre os botões das tabelas */
+td button.btn-editar,
+td button.btn-ok,
+td button.btn-excluir {
+    margin: 0 12px 8px 0;
+}
+
+/* ===== CARDS DE RESUMO ===== */
+
+.resumo {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    border-left: 6px solid var(--cor-principal);
+}
+
+.card span {
+    display: block;
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 8px;
+}
+
+.card strong {
+    font-size: 26px;
+    color: var(--escuro);
+}
+
+/* ===== FILTROS ===== */
+
+.filtros {
+    max-width: 320px;
+    margin-bottom: 16px;
+}
+
+/* ===== TOTAL DENTRO DO FORMULÁRIO ===== */
+
+.total-box {
+    background: var(--fundo);
+    border-radius: 8px;
+    padding: 12px 16px;
+}
+
+.total-box span {
+    display: block;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.total-box strong {
+    font-size: 24px;
+    color: var(--escuro);
+}
+
+/* ===== ETIQUETAS DE SITUAÇÃO ===== */
+
+.tag {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.tag-ok {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.tag-baixo {
+    background: #fef9c3;
+    color: #854d0e;
+}
+
+.tag-zero {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* ===== GRÁFICO DE VENDAS ===== */
+
+.grafico-box {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+}
+
+.grafico-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.grafico-topo select {
+    width: auto;
+}
+
+.grafico {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    height: 220px;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.coluna {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.coluna .valor {
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--escuro);
+    margin-bottom: 4px;
+    white-space: nowrap;
+}
+
+.coluna .barra {
+    width: 100%;
+    max-width: 56px;
+    border-radius: 6px 6px 0 0;
+    background: var(--cor-principal);
+}
+
+.barra-subiu {
+    background: #16a34a !important;
+}
+
+.barra-caiu {
+    background: #dc2626 !important;
+}
+
+.meses {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.meses span {
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.meses span.mes-destaque {
+    color: var(--escuro);
+    font-weight: bold;
+}
+
+.grafico-vazio {
+    width: 100%;
+    align-self: center;
+    text-align: center;
+    color: #6b7280;
+}
+
+.grafico-legenda {
+    font-size: 13px;
+    color: #6b7280;
+    margin-top: 16px;
+}
+
+.ponto {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    background: var(--cor-principal);
+    margin: 0 6px 0 14px;
+    vertical-align: middle;
+}
+
+.ponto:first-child {
+    margin-left: 0;
+}
+
+.grafico-resumo {
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--escuro);
+}
+
+/* ===== BOTÕES DO FORMULÁRIO DE ORÇAMENTO / VENDAS CANCELADAS ===== */
+
+.botoes-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+form button.btn-secundario {
+    background: var(--escuro);
+    color: #ffffff;
+}
+
+.card-cancelada {
+    border-left-color: #dc2626;
+}
+
+/* ===== BLOCOS DO ORÇAMENTO (PRODUTOS E SERVIÇOS) ===== */
+
+.bloco-orcamento {
+    grid-column: 1 / -1;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    border: 2px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.bloco-orcamento legend {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--escuro);
+    padding: 0 10px;
+}
+
+.bloco-servicos {
+    border-color: var(--cor-principal);
+}
+
+/* ===== CELULAR ===== */
+
+@media (max-width: 800px) {
+    body {
+        flex-direction: column;
+    }
+
+    .menu-lateral {
+        width: 100%;
+        padding: 16px;
+    }
+
+    .logo {
+        margin-bottom: 16px;
+    }
+
+    .menu-lateral nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .conteudo {
+        padding: 16px;
+    }
+
+    table {
+        min-width: 600px;
+    }
+}

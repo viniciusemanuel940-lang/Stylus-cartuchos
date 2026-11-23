@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema - Stylus Cartuchos</title>
+
+    <link rel="stylesheet" href="sistema.css">
+</head>
+
+<body>
+
+<datalist id="lista-clientes"></datalist>
+
+<aside class="menu-lateral">
+    <h1 class="logo">Stylus <span>Cartuchos</span></h1>
+    <nav>
+        <button data-tela="vendas" class="ativo">Vendas</button>
+        <button data-tela="canceladas">Vendas canceladas</button>
+        <button data-tela="estoque">Estoque</button>
+        <button data-tela="produtos">Produtos</button>
+        <button data-tela="clientes">Clientes</button>
+        <button data-tela="orcamentos">Orçamentos</button>
+        <button data-tela="servicos">Serviços</button>
+    </nav>
+</aside>
+
+<main class="conteudo">
+
+    <!-- ===== VENDAS ===== -->
+    <section id="tela-vendas" class="tela ativa">
+        <h2>Vendas</h2>
+
+        <div class="resumo">
+            <div class="card">
+                <span>Vendas hoje</span>
+                <strong id="resumo-vendas-qtd">0</strong>
+            </div>
+            <div class="card">
+                <span>Total vendido hoje</span>
+                <strong id="resumo-vendas-total">R$ 0,00</strong>
+            </div>
+            <div class="card">
+                <span>Total geral</span>
+                <strong id="resumo-vendas-geral">R$ 0,00</strong>
+            </div>
+        </div>
+
+        <div class="grafico-box">
+            <div class="grafico-topo">
+                <h3>Vendas por mês</h3>
+                <select id="grafico-periodo">
+                    <option value="6">Últimos 6 meses</option>
+                    <option value="12">Últimos 12 meses</option>
+                </select>
+            </div>
+
+            <div id="grafico-vendas" class="grafico"></div>
+            <div id="grafico-meses" class="meses"></div>
+
+            <p class="grafico-legenda">
+                <span class="ponto barra-subiu"></span>vendeu mais que o mês anterior
+                <span class="ponto barra-caiu"></span>vendeu menos que o mês anterior
+                <span class="ponto"></span>sem mês anterior para comparar
+            </p>
+            <p id="grafico-resumo" class="grafico-resumo"></p>
+        </div>
+
+        <form id="form-venda">
+            <div class="campo">
+                <label for="venda-cliente">Cliente (opcional)</label>
+                <input type="text" id="venda-cliente" list="lista-clientes" placeholder="Consumidor final">
+            </div>
+
+            <div class="campo">
+                <label for="venda-pagamento">Forma de pagamento</label>
+                <select id="venda-pagamento">
+                    <option value="dinheiro">Dinheiro</option>
+                    <option value="pix">Pix</option>
+                    <option value="debito">Cartão de débito</option>
+                    <option value="credito">Cartão de crédito</option>
+                </select>
+            </div>
+
+            <div class="campo campo-largo">
+                <h3>Itens da venda</h3>
+            </div>
+
+            <div class="campo">
+                <label for="venda-produto">Produto</label>
+                <select id="venda-produto"></select>
+            </div>
+
+            <div class="campo">
+                <label for="venda-qtd">Quantidade</label>
+                <input type="number" id="venda-qtd" min="1" step="1" value="1">
+            </div>
+
+            <button type="button" id="venda-add-item">Adicionar item</button>
+
+            <div class="campo campo-largo">
+                <table id="tabela-venda-itens">
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Qtd</th>
+                            <th>Preço</th>
+                            <th>Subtotal</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div class="campo">
+                <label for="venda-desconto">Desconto (R$)</label>
+                <input type="number" id="venda-desconto" step="0.01" min="0" value="0">
+            </div>
+
+            <div class="campo total-box">
+                <span>Total da venda</span>
+                <strong id="venda-total">R$ 0,00</strong>
+            </div>
+
+            <button type="submit">Finalizar venda</button>
+        </form>
+
+        <div class="tabela-wrap">
+            <table id="tabela-vendas">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Cliente</th>
+                        <th>Itens</th>
+                        <th>Pagamento</th>
+                        <th>Total</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ===== VENDAS CANCELADAS ===== -->
+    <section id="tela-canceladas" class="tela">
+        <h2>Vendas canceladas</h2>
+
+        <div class="resumo">
+            <div class="card card-cancelada">
+                <span>Vendas canceladas</span>
+                <strong id="resumo-canceladas-qtd">0</strong>
+            </div>
+            <div class="card card-cancelada">
+                <span>Valor cancelado</span>
+                <strong id="resumo-canceladas-total">R$ 0,00</strong>
+            </div>
+        </div>
+
+        <div class="tabela-wrap">
+            <table id="tabela-canceladas">
+                <thead>
+                    <tr>
+                        <th>Cancelada em</th>
+                        <th>Venda feita em</th>
+                        <th>Cliente</th>
+                        <th>Itens</th>
+                        <th>Pagamento</th>
+                        <th>Total</th>
+                        <th>Motivo</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ===== ESTOQUE ===== -->
+    <section id="tela-estoque" class="tela">
+        <h2>Estoque</h2>
+
+        <div class="resumo">
+            <div class="card">
+                <span>Produtos cadastrados</span>
+                <strong id="estoque-total">0</strong>
+            </div>
+            <div class="card">
+                <span>Estoque baixo</span>
+                <strong id="estoque-baixo">0</strong>
+            </div>
+            <div class="card">
+                <span>Esgotados</span>
+                <strong id="estoque-zerado">0</strong>
+            </div>
+        </div>
+
+        <div class="filtros">
+            <label for="estoque-filtro">Mostrar</label>
+            <select id="estoque-filtro">
+                <option value="todos">Todos os produtos</option>
+                <option value="baixo">Estoque baixo</option>
+                <option value="zerado">Esgotados</option>
+            </select>
+        </div>
+
+        <div class="tabela-wrap">
+            <table id="tabela-estoque">
+                <thead>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Categoria</th>
+                        <th>Estoque</th>
+                        <th>Situação</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ===== PRODUTOS ===== -->
+    <section id="tela-produtos" class="tela">
+        <h2>Produtos</h2>
+
+        <form id="form-produto">
+            <div class="campo">
+                <label for="produto-nome">Nome</label>
+                <input type="text" id="produto-nome" required>
+            </div>
+
+            <div class="campo">
+                <label for="produto-categoria">Categoria</label>
+                <select id="produto-categoria">
+                    <option value="toner">Toner</option>
+                    <option value="cartucho">Cartucho</option>
+                    <option value="capinha">Capinha</option>
+                    <option value="pelicula">Película</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="produto-preco">Preço (R$)</label>
+                <input type="number" id="produto-preco" step="0.01" min="0" required>
+            </div>
+
+            <div class="campo">
+                <label for="produto-estoque">Quantidade em estoque</label>
+                <input type="number" id="produto-estoque" min="0" required>
+            </div>
+
+            <button type="submit">Salvar produto</button>
+        </form>
+
+        <div class="filtros">
+            <label for="busca-produto">Buscar produto</label>
+            <input type="search" id="busca-produto" placeholder="Nome ou categoria">
+        </div>
+
+        <div class="filtros">
+            <label for="produtos-filtro">Ver categoria</label>
+            <select id="produtos-filtro">
+                <option value="todas">Todas as categorias</option>
+                <option value="toner">Toner</option>
+                <option value="cartucho">Cartucho</option>
+                <option value="capinha">Capinha</option>
+                <option value="pelicula">Película</option>
+            </select>
+        </div>
+
+        <div class="tabela-wrap">
+            <table id="tabela-produtos">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Categoria</th>
+                        <th>Preço</th>
+                        <th>Estoque</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ===== CLIENTES ===== -->
+    <section id="tela-clientes" class="tela">
+        <h2>Clientes</h2>
+
+        <form id="form-cliente">
+            <div class="campo">
+                <label for="cliente-nome">Nome</label>
+                <input type="text" id="cliente-nome" required>
+            </div>
+
+            <div class="campo">
+                <label for="cliente-cpf">CPF</label>
+                <input type="text" id="cliente-cpf" maxlength="14" placeholder="000.000.000-00" inputmode="numeric">
+            </div>
+
+            <div class="campo">
+                <label for="cliente-cnpj">CNPJ da empresa</label>
+                <input type="text" id="cliente-cnpj" maxlength="18" placeholder="00.000.000/0000-00" inputmode="numeric">
+            </div>
+
+            <div class="campo">
+                <label for="cliente-telefone">Telefone</label>
+                <input type="text" id="cliente-telefone" placeholder="(00) 00000-0000" inputmode="tel">
+            </div>
+
+            <div class="campo">
+                <label for="cliente-email">E-mail</label>
+                <input type="email" id="cliente-email">
+            </div>
+
+            <div class="campo campo-largo">
+                <label for="cliente-endereco">Endereço</label>
+                <input type="text" id="cliente-endereco">
+            </div>
+
+            <div class="campo campo-largo">
+                <label for="cliente-obs">Observações</label>
+                <textarea id="cliente-obs" rows="2"></textarea>
+            </div>
+
+            <button type="submit">Salvar cliente</button>
+        </form>
+
+        <div class="filtros">
+            <label for="busca-cliente">Buscar cliente</label>
+            <input type="search" id="busca-cliente" placeholder="Nome, CPF, CNPJ ou telefone">
+        </div>
+
+        <div class="tabela-wrap">
+            <table id="tabela-clientes">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>CPF</th>
+                        <th>CNPJ</th>
+                        <th>Telefone</th>
+                        <th>E-mail</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ===== ORÇAMENTOS ===== -->
+    <section id="tela-orcamentos" class="tela">
+        <h2>Orçamentos</h2>
+
+        <form id="form-orcamento">
+            <div class="campo">
+                <label for="orcamento-cliente">Cliente</label>
+                <input type="text" id="orcamento-cliente" list="lista-clientes" required>
+            </div>
+
+            <div class="campo">
+                <label for="orcamento-validade">Validade (dias)</label>
+                <input type="number" id="orcamento-validade" min="1" step="1" value="7" required>
+            </div>
+
+            <!-- ===== BLOCO DE PRODUTOS ===== -->
+            <fieldset class="bloco-orcamento">
+                <legend>Produtos (peças)</legend>
+
+                <div class="campo">
+                    <label for="orcamento-categoria">Categoria</label>
+                    <select id="orcamento-categoria">
+                        <option value="todas">Todas as categorias</option>
+                        <option value="toner">Toner</option>
+                        <option value="cartucho">Cartucho</option>
+                        <option value="capinha">Capinha</option>
+                        <option value="pelicula">Película</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="orcamento-busca-produto">Buscar produto</label>
+                    <input type="search" id="orcamento-busca-produto" placeholder="Digite o nome">
+                </div>
+
+                <div class="campo">
+                    <label for="orcamento-produto">Produto</label>
+                    <select id="orcamento-produto"></select>
+                </div>
+
+                <div class="campo">
+                    <label for="orcamento-produto-modelo">Compatível com (modelo)</label>
+                    <input type="text" id="orcamento-produto-modelo" placeholder="Ex.: Galaxy A15 ou HP 664">
+                </div>
+
+                <div class="campo">
+                    <label for="orcamento-produto-detalhes">Detalhes</label>
+                    <input type="text" id="orcamento-produto-detalhes" placeholder="Ex.: original, cor preta">
+                </div>
+
+                <div class="campo">
+                    <label for="orcamento-qtd">Quantidade</label>
+                    <input type="number" id="orcamento-qtd" min="1" step="1" value="1">
+                </div>
+
+                <div class="campo">
+                    <label for="orcamento-produto-preco">Preço unitário (R$)</label>
+                    <input type="number" id="orcamento-produto-preco" step="0.01" min="0">
+                </div>
+
+                <button type="button" id="orcamento-add-item">Adicionar produto</button>
+
+                <div class="campo-largo tabela-wrap">
+                    <table id="tabela-orcamento-produtos">
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Categoria</th>
+                                <th>Compatível com</th>
+                                <th>Detalhes</th>
+                                <th>Qtd</th>
+                                <th>Preço</th>
+                                <th>Subtotal</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </fieldset>
+
+            <!-- ===== BLOCO DE SERVIÇOS ===== -->
+            <fieldset class="bloco-orcamento bloco-servicos">
+                <legend>Serviços (mão de obra)</legend>
+
+                <div class="campo">
+                    <label for="orcamento-servico-tipo">Tipo de aparelho</label>
+                    <select id="orcamento-servico-tipo">
+                        <option value="celular">Celular</option>
+                        <option value="impressora">Impressora</option>
+                        <option value="notebook">Notebook</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="orcamento-servico-modelo">Modelo do aparelho</label>
+                    <input type="text" id="orcamento-servico-modelo" placeholder="Ex.: Galaxy A15">
+                </div>
+
+                <div class="campo">
+                    <label for="orcamento-servico-nome">Serviço</label>
+                    <select id="orcamento-servico-nome">
+                        <option value="Troca de tela">Troca de tela</option>
+                        <option value="Troca de bateria">Troca de bateria</option>
+                        <option value="Troca de conector">Troca de conector</option>
+                        <option value="Formatação">Formatação</option>
+                        <option value="Limpeza">Limpeza</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label for="orcamento-servico-detalhes">Detalhes</label>
+                    <input type="text" id="orcamento-servico-detalhes" placeholder="Ex.: tela original, com aro">
+                </div>
+
+                <div class="campo">
+                    <label for="orcamento-servico-valor">Valor (R$)</label>
+                    <input type="number" id="orcamento-servico-valor" step="0.01" min="0">
+                </div>
+
+                <button type="button" id="orcamento-add-servico">Adicionar serviço</button>
+
+                <div class="campo-largo tabela-wrap">
+                    <table id="tabela-orcamento-servicos">
+                        <thead>
+                            <tr>
+                                <th>Serviço</th>
+                                <th>Aparelho</th>
+                                <th>Detalhes</th>
+                                <th>Valor</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </fieldset>
+
+            <div class="campo">
+                <label for="orcamento-desconto">Desconto (R$)</label>
+                <input type="number" id="orcamento-desconto" step="0.01" min="0" value="0">
+            </div>
+
+            <div class="campo total-box">
+                <span>Total do orçamento</span>
+                <strong id="orcamento-total">R$ 0,00</strong>
+            </div>
+
+            <div class="campo campo-largo">
+                <label for="orcamento-obs">Observações</label>
+                <textarea id="orcamento-obs" rows="2"></textarea>
+            </div>
+
+            <div class="campo campo-largo botoes-form">
+                <button type="submit" data-acao="salvar">Salvar orçamento</button>
+                <button type="submit" data-acao="imprimir" class="btn-secundario">Salvar e imprimir</button>
+                <button type="submit" data-acao="servico" class="btn-secundario">Salvar e criar ordem de serviço</button>
+            </div>
+        </form>
+
+        <div class="tabela-wrap">
+            <table id="tabela-orcamentos">
+                <thead>
+                    <tr>
+                        <th>Nº</th>
+                        <th>Cliente</th>
+                        <th>Data</th>
+                        <th>Válido até</th>
+                        <th>Total</th>
+                        <th>Situação</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ===== SERVIÇOS ===== -->
+    <section id="tela-servicos" class="tela">
+        <h2>Ordens de Serviço</h2>
+
+        <form id="form-os">
+            <div class="campo">
+                <label for="os-cliente">Nome do cliente</label>
+                <input type="text" id="os-cliente" list="lista-clientes" required>
+            </div>
+
+            <div class="campo">
+                <label for="os-cpf">CPF</label>
+                <input type="text" id="os-cpf" maxlength="14" placeholder="000.000.000-00" inputmode="numeric">
+            </div>
+
+            <div class="campo">
+                <label for="os-telefone">Telefone</label>
+                <input type="text" id="os-telefone" placeholder="(00) 00000-0000" inputmode="tel">
+            </div>
+
+            <div class="campo">
+                <label for="os-entrada">Data de entrada</label>
+                <input type="date" id="os-entrada" required>
+            </div>
+
+            <div class="campo">
+                <label for="os-tipo">Tipo de aparelho</label>
+                <select id="os-tipo">
+                    <option value="celular">Celular</option>
+                    <option value="impressora">Impressora</option>
+                    <option value="notebook">Notebook</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="os-senha">Senha do aparelho</label>
+                <input type="text" id="os-senha">
+            </div>
+
+            <div class="campo">
+                <label for="os-modelo">Modelo</label>
+                <input type="text" id="os-modelo" required>
+            </div>
+
+            <div class="campo campo-largo">
+                <label for="os-defeito">Defeito relatado</label>
+                <textarea id="os-defeito" rows="3"></textarea>
+            </div>
+
+            <div class="campo">
+                <label for="os-valor">Valor do serviço (R$)</label>
+                <input type="number" id="os-valor" step="0.01" min="0" required>
+            </div>
+
+            <div class="campo">
+                <label for="os-pelicula">Inclui película?</label>
+                <select id="os-pelicula">
+                    <option value="nao">Não</option>
+                    <option value="sim">Sim</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label for="os-garantia">Garantia</label>
+                <select id="os-garantia">
+                    <option value="sem">Sem garantia</option>
+                    <option value="30">30 dias</option>
+                    <option value="90">90 dias</option>
+                    <option value="180">6 meses</option>
+                    <option value="365">1 ano</option>
+                </select>
+            </div>
+
+            <div class="campo campo-largo">
+                <label for="os-termos">Descrição da garantia</label>
+                <textarea id="os-termos" rows="3"></textarea>
+            </div>
+
+            <button type="submit">Salvar ordem de serviço</button>
+        </form>
+
+        <div class="tabela-wrap">
+            <table id="tabela-os">
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Aparelho</th>
+                        <th>Entrada</th>
+                        <th>Valor</th>
+                        <th>Venda</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </section>
+
+</main>
+
+<script src="sistema.js"></script>
+
+</body>
+</html>
