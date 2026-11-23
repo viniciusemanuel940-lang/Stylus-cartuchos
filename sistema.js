@@ -175,7 +175,7 @@ const nomesGarantia = {
 // Dados da Stylus Cartuchos (aparecem no topo das impressões).
 // FALTA o CNPJ: escreva entre as aspas, por exemplo '12.345.678/0001-95'
 const EMPRESA = {
-    cnpj: '',
+    cnpj: '55.215.678/0001-83',
     telefone: '(67) 99104-3557',
     endereco: 'Rua Elmano Soares, 203 - Centro - CEP 79601-020'
 };
