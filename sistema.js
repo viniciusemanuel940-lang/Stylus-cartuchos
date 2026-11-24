@@ -1307,6 +1307,13 @@ function mostrarVendas() {
 
         const celulaAcoes = document.createElement('td');
 
+        const botaoImprimir = document.createElement('button');
+        botaoImprimir.textContent = 'Imprimir';
+        botaoImprimir.className = 'btn-editar';
+        botaoImprimir.addEventListener('click', function () {
+            imprimirVenda(venda.id);
+        });
+
         const botaoCancelar = document.createElement('button');
         botaoCancelar.textContent = 'Cancelar venda';
         botaoCancelar.className = 'btn-excluir';
@@ -1314,11 +1321,46 @@ function mostrarVendas() {
             cancelarVenda(venda.id);
         });
 
+        celulaAcoes.appendChild(botaoImprimir);
         celulaAcoes.appendChild(botaoCancelar);
         linha.appendChild(celulaAcoes);
 
         tabelaVendas.appendChild(linha);
     });
+}
+
+function imprimirVenda(id) {
+    const venda = vendas.find(function (item) {
+        return item.id === id;
+    });
+
+    let linhas = '';
+
+    venda.itens.forEach(function (item) {
+        linhas +=
+            '<tr>' +
+            '<td>' + esc(item.nome) + '</td>' +
+            '<td>' + item.qtd + '</td>' +
+            '<td>' + moeda(item.preco) + '</td>' +
+            '<td>' + moeda(item.preco * item.qtd) + '</td>' +
+            '</tr>';
+    });
+
+    let corpo =
+        '<h2>Comprovante de venda</h2>' +
+        dadosDoCliente(venda.cliente || 'Consumidor final') +
+        '<p><strong>Data:</strong> ' + formatarDataHora(venda.data) + '</p>' +
+        '<p><strong>Pagamento:</strong> ' + (nomesPagamento[venda.pagamento] || esc(venda.pagamento)) + '</p>' +
+        '<table><thead><tr><th>Produto</th><th>Qtd</th><th>Preço</th><th>Subtotal</th></tr></thead>' +
+        '<tbody>' + linhas + '</tbody></table>';
+
+    if (venda.desconto > 0) {
+        corpo += '<p class="total">Desconto: ' + moeda(venda.desconto) + '</p>';
+    }
+
+    corpo += '<p class="total"><strong>Total: ' + moeda(venda.total) + '</strong></p>';
+
+    abrirImpressao('Venda', corpo);
 }
 
 function cancelarVenda(id) {
